@@ -3,10 +3,16 @@ package com.wyden.padaria_server.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.wyden.padaria_server.model.ItemPedido;
+import com.wyden.padaria_server.model.Pedido;
+import com.wyden.padaria_server.repository.ItemPedidoRepository;
+import com.wyden.padaria_server.repository.PedidoRepository;
+
 import java.util.List;
 
 @Service
 public class PedidoService {
+
 
     @Autowired
     private PedidoRepository pedidoRepository;

@@ -72,5 +72,11 @@ public class ItemPedido {
         this.observacao = observacao;
     }
 
+    public com.wyden.padaria_server.model.Pedido getPedido() {
+        return pedido;
+    }
 
+    public void setPedido(com.wyden.padaria_server.model.Pedido pedido) {
+        this.pedido = pedido;
+    }
 }
