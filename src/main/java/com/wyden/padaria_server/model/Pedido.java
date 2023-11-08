@@ -2,62 +2,54 @@ package com.wyden.padaria_server.model;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.security.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "pedido")
 public class Pedido {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID_pedido")
-    private Long idPedido;
+    @Column(name = "ID_Pedido")
+    private Integer idPedido;
 
-    @Column(name = "data_hora", nullable = false)
-    private Timestamp dataHora;
+    @Column(name = "Data_Pedido")
+    private Date dataPedido;
 
-    @Column(name = "status_pedido", length = 50, nullable = false)
-    private String statusPedido;
-
-    @Column(name = "nome_cliente", length = 255, nullable = false)
+    @Column(name = "Nome_Cliente")
     private String nomeCliente;
 
-    @Column(name = "endereco_cliente", length = 255, nullable = false)
+    @Column(name = "Endereco_Cliente")
     private String enderecoCliente;
 
-    @Column(name = "telefone_cliente", length = 255, nullable = false)
+    @Column(name = "Telefone_Cliente")
     private String telefoneCliente;
 
-    @OneToMany(mappedBy = "pedido")
-    private List<ItemPedido> itensPedido;
+    @Column(name = "status_pedido")
+    private String statusPedido;
+
+    @Column(name = "Total_Pedido")
+    private BigDecimal totalPedido;
 
     public Pedido(){}
 
-    //Getter e setters
-
-    public Long getIdPedido() {
+    //getters e setters
+    public Integer getIdPedido() {
         return idPedido;
     }
 
-    public void setIdPedido(Long idPedido) {
+    public void setIdPedido(Integer idPedido) {
         this.idPedido = idPedido;
     }
 
-    public Timestamp getDataHora() {
-        return dataHora;
+    public Date getDataPedido() {
+        return dataPedido;
     }
 
-    public void setDataHora(Timestamp dataHora) {
-        this.dataHora = dataHora;
-    }
-
-    public String getStatusPedido() {
-        return statusPedido;
-    }
-
-    public void setStatusPedido(String statusPedido) {
-        this.statusPedido = statusPedido;
+    public void setDataPedido(Date dataPedido) {
+        this.dataPedido = dataPedido;
     }
 
     public String getNomeCliente() {
@@ -84,11 +76,19 @@ public class Pedido {
         this.telefoneCliente = telefoneCliente;
     }
 
-    public List<ItemPedido> getItensPedido() {
-        return itensPedido;
+    public String getStatusPedido() {
+        return statusPedido;
     }
 
-    public void setItensPedido(List<ItemPedido> itensPedido) {
-        this.itensPedido = itensPedido;
+    public void setStatusPedido(String statusPedido) {
+        this.statusPedido = statusPedido;
+    }
+
+    public BigDecimal getTotalPedido() {
+        return totalPedido;
+    }
+
+    public void setTotalPedido(BigDecimal totalPedido) {
+        this.totalPedido = totalPedido;
     }
 }

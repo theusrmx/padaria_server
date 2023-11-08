@@ -10,49 +10,60 @@ public class ItemPedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_item_pedido")
-    private Long id;
+    private Long idItem;
 
-    @Column(name = "nome_item", length = 255, nullable = false)
-    private String nomeItem;
+    @ManyToOne
+    @JoinColumn(name = "ID_Pedido", referencedColumnName = "ID_Pedido")
+    private Pedido pedido;
 
-    @Column(name = "quantidade", nullable = false)
-    private int quantidade;
+    @ManyToOne
+    @JoinColumn(name = "ID_Produto", referencedColumnName = "ID_Produto")
+    private Produtos produtos;
+
+    @Column(name = "Quantidade")
+    private Integer quantidade;
 
     @Column(name = "preco_unitario", precision = 10, scale = 2, nullable = false)
     private BigDecimal precoUnitario;
 
-    @Column(name = "observacao", length = 255)
+    @Column(name = "observacao")
     private String observacao;
 
-    @ManyToOne
-    @JoinColumn(name = "ID_pedido", nullable = false)
-    private Pedido pedido;
+    @Column(name = "Total_Item", nullable = false)
+    private BigDecimal totalItem;
 
     public ItemPedido(){}
 
     //Getters e setters
-
     public Long getId() {
-        return id;
+        return idItem;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.idItem = id;
     }
 
-    public String getNomeItem() {
-        return nomeItem;
+    public Pedido getPedido() {
+        return pedido;
     }
 
-    public void setNomeItem(String nomeItem) {
-        this.nomeItem = nomeItem;
+    public void setPedido(Pedido pedido) {
+        this.pedido = pedido;
     }
 
-    public int getQuantidade() {
+    public Produtos getProdutos() {
+        return produtos;
+    }
+
+    public void setProdutos(Produtos produtos) {
+        this.produtos = produtos;
+    }
+
+    public Integer getQuantidade() {
         return quantidade;
     }
 
-    public void setQuantidade(int quantidade) {
+    public void setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;
     }
 
@@ -72,11 +83,11 @@ public class ItemPedido {
         this.observacao = observacao;
     }
 
-    public com.wyden.padaria_server.model.Pedido getPedido() {
-        return pedido;
+    public BigDecimal getTotalItem() {
+        return totalItem;
     }
 
-    public void setPedido(com.wyden.padaria_server.model.Pedido pedido) {
-        this.pedido = pedido;
+    public void setTotalItem(BigDecimal totalItem) {
+        this.totalItem = totalItem;
     }
 }

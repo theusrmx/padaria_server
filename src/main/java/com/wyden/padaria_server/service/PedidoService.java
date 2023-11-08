@@ -13,26 +13,27 @@ import java.util.List;
 @Service
 public class PedidoService {
 
-
     @Autowired
     private PedidoRepository pedidoRepository;
 
-    @Autowired
-    private ItemPedidoRepository itemRepository;
-
-
-    public Pedido criarPedido(Pedido pedido, List<ItemPedido> itensPedido) {
-        // Salvar o pedido
-        Pedido novoPedido = pedidoRepository.save(pedido);
-
-        // Associar os itens de pedido ao pedido
-        for (ItemPedido item : itensPedido) {
-            item.setPedido(novoPedido);
-        }
-
-        // Salvar os itens do pedido
-        itemRepository.saveAll(itensPedido);
-
-        return novoPedido;
+    public Pedido criarPedido(Pedido pedido) {
+        return pedidoRepository.save(pedido);
     }
+
+    public Pedido obterPedido(Long id) {
+        return pedidoRepository.findById(id).orElse(null);
+    }
+
+    public List<Pedido> listarPedidos() {
+        return pedidoRepository.findAll();
+    }
+
+    public void atualizarPedido(Long id, Pedido pedido) {
+        pedidoRepository.save(pedido);
+    }
+
+    public void deletarPedido(Long id) {
+        pedidoRepository.deleteById(id);
+    }
+
 }

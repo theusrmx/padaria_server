@@ -11,15 +11,44 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("carrinho")
+@RequestMapping("/pedidos")
 public class PedidoController {
     @Autowired
     private PedidoService pedidoService;
 
+    @PostMapping("/criar")
+    public Pedido criarPedido(@RequestBody Pedido pedido) {
+        return pedidoService.criarPedido(pedido);
+    }
+
+    @GetMapping("/{id}")
+    public Pedido obterPedido(@PathVariable Long id) {
+        return pedidoService.obterPedido(id);
+    }
+
+    @GetMapping
+    public List<Pedido> listarPedidos() {
+        return pedidoService.listarPedidos();
+    }
+
+    @PutMapping("/{id}")
+    public void atualizarPedido(@PathVariable Long id, @RequestBody Pedido pedido) {
+        pedidoService.atualizarPedido(id, pedido);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deletarPedido(@PathVariable Long id) {
+        pedidoService.deletarPedido(id);
+    }
+
+    /*
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/checkout")
     public ResponseEntity<Pedido> criarPedido(@RequestBody Pedido pedido, @RequestBody List<ItemPedido> itensPedido) {
         Pedido novoPedido = pedidoService.criarPedido(pedido, itensPedido);
         return new ResponseEntity<>(novoPedido, HttpStatus.CREATED);
     }
+
+    */
+
 }
