@@ -3,17 +3,14 @@ package com.wyden.padaria_server.model;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
-import java.security.Timestamp;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "pedidos")
 public class Pedido {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_pedido")
-    private Integer idPedido;
+    private String idPedido;
 
     @Column(name = "data_pedido")
     private Date dataPedido;
@@ -35,28 +32,16 @@ public class Pedido {
 
     public Pedido(){}
 
-    // Construtor que aceita uma String para o ID temporário
-    public Pedido(String idTemporario) {
-        // Lógica para inicializar os campos com base no ID temporário
-        // Por exemplo, você pode gerar um ID numérico a partir do ID temporário.
-        this.idPedido = generateNumericIdFromTemporaryId(idTemporario);
-        // Inicialize outras propriedades conforme necessário
+    // Construtor que aceita a String para idPedido
+    public Pedido(String idPedido) {
+        this.idPedido = idPedido;
     }
-
-    // Métodos auxiliares
-    private Integer generateNumericIdFromTemporaryId(String idTemporario) {
-        // Implemente a lógica para converter o ID temporário em um ID numérico
-        // Por exemplo, você pode usar um hash ou alguma outra técnica de conversão
-        // Este é apenas um exemplo, adapte conforme necessário
-        return idTemporario.hashCode();
-    }
-
     //getters e setters
-    public Integer getIdPedido() {
+    public String getIdPedido() {
         return idPedido;
     }
 
-    public void setIdPedido(Integer idPedido) {
+    public void setIdPedido(String idPedido) {
         this.idPedido = idPedido;
     }
 

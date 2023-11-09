@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "ItemPedido")
+@Table(name = "itempedido")
 public class ItemPedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,34 +13,48 @@ public class ItemPedido {
     private Long idItem;
 
     @ManyToOne
-    @JoinColumn(name = "ID_Pedido", referencedColumnName = "ID_Pedido")
+    @JoinColumn(name = "ID_Pedido", referencedColumnName = "ID_Pedido", nullable = false)
     private Pedido pedido;
 
     @ManyToOne
-    @JoinColumn(name = "ID_Produto", referencedColumnName = "ID_Produto")
+    @JoinColumn(name = "ID_Produto", referencedColumnName = "ID_Produto", nullable = false)
     private Produtos produtos;
 
-    @Column(name = "Quantidade")
+    @Column(name = "Quantidade", nullable = false)
     private Integer quantidade;
 
     @Column(name = "preco_unitario", precision = 10, scale = 2, nullable = false)
     private BigDecimal precoUnitario;
 
-    @Column(name = "observacao")
+    @Column(name = "observacao", nullable = false)
     private String observacao;
+
+    @Column(name = "tamanho", nullable = false)
+    private String tamanho;
 
     @Column(name = "Total_Item", nullable = false)
     private BigDecimal totalItem;
 
     public ItemPedido(){}
 
+    public ItemPedido(Long idItem, Pedido pedido, Produtos produtos, Integer quantidade, BigDecimal precoUnitario, String observacao, String tamanho, BigDecimal totalItem) {
+        this.idItem = idItem;
+        this.pedido = pedido;
+        this.produtos = produtos;
+        this.quantidade = quantidade;
+        this.precoUnitario = precoUnitario;
+        this.observacao = observacao;
+        this.tamanho = tamanho;
+        this.totalItem = totalItem;
+    }
+
     //Getters e setters
-    public Long getId() {
+    public Long getIdItem() {
         return idItem;
     }
 
-    public void setId(Long id) {
-        this.idItem = id;
+    public void setIdItem(Long idItem) {
+        this.idItem = idItem;
     }
 
     public Pedido getPedido() {
@@ -81,6 +95,14 @@ public class ItemPedido {
 
     public void setObservacao(String observacao) {
         this.observacao = observacao;
+    }
+
+    public String getTamanho() {
+        return tamanho;
+    }
+
+    public void setTamanho(String tamanho) {
+        this.tamanho = tamanho;
     }
 
     public BigDecimal getTotalItem() {

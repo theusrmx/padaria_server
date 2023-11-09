@@ -51,6 +51,10 @@ public class Produtos {
 
     public Produtos(){}
 
+    public Produtos(String idProduto) {
+        this.idProduto = Long.valueOf(idProduto);
+    }
+
     //Getters e setters
 
     public Long getIdProduto() {
