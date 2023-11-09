@@ -8,32 +8,48 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "pedido")
+@Table(name = "pedidos")
 public class Pedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID_Pedido")
+    @Column(name = "id_pedido")
     private Integer idPedido;
 
-    @Column(name = "Data_Pedido")
+    @Column(name = "data_pedido")
     private Date dataPedido;
 
-    @Column(name = "Nome_Cliente")
+    @Column(name = "nome_cliente")
     private String nomeCliente;
 
-    @Column(name = "Endereco_Cliente")
+    @Column(name = "endereco_cliente")
     private String enderecoCliente;
 
-    @Column(name = "Telefone_Cliente")
+    @Column(name = "telefone_cliente")
     private String telefoneCliente;
 
     @Column(name = "status_pedido")
     private String statusPedido;
 
-    @Column(name = "Total_Pedido")
+    @Column(name = "total_pedido")
     private BigDecimal totalPedido;
 
     public Pedido(){}
+
+    // Construtor que aceita uma String para o ID temporário
+    public Pedido(String idTemporario) {
+        // Lógica para inicializar os campos com base no ID temporário
+        // Por exemplo, você pode gerar um ID numérico a partir do ID temporário.
+        this.idPedido = generateNumericIdFromTemporaryId(idTemporario);
+        // Inicialize outras propriedades conforme necessário
+    }
+
+    // Métodos auxiliares
+    private Integer generateNumericIdFromTemporaryId(String idTemporario) {
+        // Implemente a lógica para converter o ID temporário em um ID numérico
+        // Por exemplo, você pode usar um hash ou alguma outra técnica de conversão
+        // Este é apenas um exemplo, adapte conforme necessário
+        return idTemporario.hashCode();
+    }
 
     //getters e setters
     public Integer getIdPedido() {

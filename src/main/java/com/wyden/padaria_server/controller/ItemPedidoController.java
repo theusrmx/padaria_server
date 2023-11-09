@@ -8,12 +8,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/carrinho")
+@RequestMapping("itemPedido")
 public class ItemPedidoController {
     @Autowired
     private ItemPedidoService itemPedidoService;
 
-    @PostMapping("/adicionar-item")
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @PostMapping("/criar")
     public ItemPedido criarItemPedido(@RequestBody ItemPedido itemPedido) {
         return itemPedidoService.criarItemPedido(itemPedido);
     }

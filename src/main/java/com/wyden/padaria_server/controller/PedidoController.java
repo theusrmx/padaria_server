@@ -11,31 +11,36 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/pedidos")
+@RequestMapping("pedidos")
 public class PedidoController {
     @Autowired
     private PedidoService pedidoService;
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/criar")
     public Pedido criarPedido(@RequestBody Pedido pedido) {
         return pedidoService.criarPedido(pedido);
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("/{id}")
     public Pedido obterPedido(@PathVariable Long id) {
         return pedidoService.obterPedido(id);
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping
     public List<Pedido> listarPedidos() {
         return pedidoService.listarPedidos();
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PutMapping("/{id}")
     public void atualizarPedido(@PathVariable Long id, @RequestBody Pedido pedido) {
         pedidoService.atualizarPedido(id, pedido);
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @DeleteMapping("/{id}")
     public void deletarPedido(@PathVariable Long id) {
         pedidoService.deletarPedido(id);
