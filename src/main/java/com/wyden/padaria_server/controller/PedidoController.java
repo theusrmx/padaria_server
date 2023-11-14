@@ -1,7 +1,9 @@
 package com.wyden.padaria_server.controller;
 
+import com.wyden.padaria_server.dto.PedidoDTO;
 import com.wyden.padaria_server.model.ItemPedido;
 import com.wyden.padaria_server.model.Pedido;
+import com.wyden.padaria_server.service.ItemPedidoService;
 import com.wyden.padaria_server.service.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,12 +17,23 @@ import java.util.List;
 public class PedidoController {
     @Autowired
     private PedidoService pedidoService;
+    private ItemPedidoService itemPedidoService;
 
+    /*
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/criar")
     public Pedido criarPedido(@RequestBody Pedido pedido) {
         return pedidoService.criarPedido(pedido);
     }
+     */
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.POST})
+    @PostMapping("/checkout")
+    public ResponseEntity<Pedido> criarPedido(@RequestBody PedidoDTO pedidoDTO) {
+        Pedido novoPedido = pedidoService.criarPedido(pedidoDTO);
+        return new ResponseEntity<>(novoPedido, HttpStatus.CREATED);
+    }
+
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("/{id}")
@@ -55,5 +68,6 @@ public class PedidoController {
     }
 
     */
+
 
 }

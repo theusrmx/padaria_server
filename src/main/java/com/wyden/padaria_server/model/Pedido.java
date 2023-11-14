@@ -3,14 +3,17 @@ package com.wyden.padaria_server.model;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "pedidos")
 public class Pedido {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_pedido")
-    private String idPedido;
+    private Long idPedido;
 
     @Column(name = "data_pedido")
     private Date dataPedido;
@@ -30,18 +33,21 @@ public class Pedido {
     @Column(name = "total_pedido")
     private BigDecimal totalPedido;
 
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
+    private List<ItemPedido> itens = new ArrayList<>();
+
     public Pedido(){}
 
     // Construtor que aceita a String para idPedido
-    public Pedido(String idPedido) {
+    public Pedido(Long idPedido) {
         this.idPedido = idPedido;
     }
     //getters e setters
-    public String getIdPedido() {
+    public Long getIdPedido() {
         return idPedido;
     }
 
-    public void setIdPedido(String idPedido) {
+    public void setIdPedido(Long idPedido) {
         this.idPedido = idPedido;
     }
 
@@ -92,4 +98,13 @@ public class Pedido {
     public void setTotalPedido(BigDecimal totalPedido) {
         this.totalPedido = totalPedido;
     }
+
+    public List<ItemPedido> getItens() {
+        return itens;
+    }
+
+    public void setItens(List<ItemPedido> itens) {
+        this.itens = itens;
+    }
+
 }

@@ -13,13 +13,12 @@ public class ItemPedido {
     private Long idItem;
 
     @ManyToOne
-    @JoinColumn(name = "ID_Pedido", referencedColumnName = "ID_Pedido", nullable = false)
+    @JoinColumn(name = "id_pedido", referencedColumnName = "id_pedido", nullable = false)
     private Pedido pedido;
 
     @ManyToOne
-    @JoinColumn(name = "ID_Produto", referencedColumnName = "ID_Produto", nullable = false)
+    @JoinColumn(name = "id_produto", referencedColumnName = "id_produto", nullable = false)
     private Produtos produtos;
-
     @Column(name = "Quantidade", nullable = false)
     private Integer quantidade;
 
