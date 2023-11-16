@@ -1,5 +1,6 @@
 package com.wyden.padaria_server.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -19,6 +20,7 @@ public class ItemPedido {
     @ManyToOne
     @JoinColumn(name = "id_produto", referencedColumnName = "id_produto", nullable = false)
     private Produtos produtos;
+
     @Column(name = "Quantidade", nullable = false)
     private Integer quantidade;
 

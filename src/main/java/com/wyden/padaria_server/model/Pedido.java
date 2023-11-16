@@ -1,5 +1,6 @@
 package com.wyden.padaria_server.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -34,6 +35,7 @@ public class Pedido {
     private BigDecimal totalPedido;
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<ItemPedido> itens = new ArrayList<>();
 
     public Pedido(){}
