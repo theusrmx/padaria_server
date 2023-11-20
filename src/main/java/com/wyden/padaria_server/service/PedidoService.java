@@ -105,6 +105,24 @@ public class PedidoService {
         }
     }
 
+    public PedidoDTO editarStatusPedido(Long pedidoId, String novoStatus) {
+        Optional<Pedido> optionalPedido = pedidoRepository.findById(pedidoId);
+
+        if (optionalPedido.isPresent()) {
+            Pedido pedido = optionalPedido.get();
+
+            // Atualiza o status do pedido
+            pedido.setStatusPedido(novoStatus);
+
+            // Salva as alterações no banco de dados
+            pedidoRepository.save(pedido);
+
+            // Retorna o PedidoDTO atualizado
+            return new PedidoDTO(pedido, carregarItensDoPedidoPorId(pedidoId));
+        } else {
+            return null;
+        }
+    }
 
 
 
