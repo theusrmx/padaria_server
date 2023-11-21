@@ -1,6 +1,7 @@
 package com.wyden.padaria_server.service;
 
 import com.wyden.padaria_server.dto.PedidoDTO;
+import com.wyden.padaria_server.model.Produtos;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -123,6 +124,23 @@ public class PedidoService {
             return null;
         }
     }
+
+
+    public boolean excluirPedido(Long pedidoId){
+        //Verificando se o pedido com o Id existe
+        Optional<Pedido> optionalPedido = pedidoRepository.findById(pedidoId);
+
+        if(optionalPedido.isPresent()){
+            //o pedido existe, pode ser excluido
+            pedidoRepository.deleteById(pedidoId);
+            return true;
+        }else{
+            //Pedido nao encontrado, nao pode ser excluido
+            return false;
+        }
+    }
+
+
 
 
 

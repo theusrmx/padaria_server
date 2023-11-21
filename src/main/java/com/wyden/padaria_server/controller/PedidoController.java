@@ -27,7 +27,7 @@ public class PedidoController {
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.GET})
-    @GetMapping("/{id}")
+    @GetMapping("detalhes/{id}")
     public ResponseEntity<PedidoDTO> getPedido(@PathVariable Long id) {
         PedidoDTO pedidoDTO = pedidoService.getPedidoDTO(id);
 
@@ -59,6 +59,16 @@ public class PedidoController {
             return new ResponseEntity<>(pedidoDTO, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity<Void> excluirPedido(@PathVariable Long id) {
+        if (pedidoService.excluirPedido(id)) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
         }
     }
 

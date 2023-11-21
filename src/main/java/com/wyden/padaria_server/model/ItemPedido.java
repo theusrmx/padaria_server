@@ -1,6 +1,5 @@
 package com.wyden.padaria_server.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
