@@ -15,6 +15,9 @@ public class ProdutosService {
     @Autowired
     private ProdutosRepository repository;
 
+    @Autowired
+    private AuthService authService;
+
     public List<Produtos> getTodosProdutos(){
         return repository.findAll();
     }
@@ -47,5 +50,11 @@ public class ProdutosService {
 
         // Executar a consulta personalizada com o dia da semana atual
         return repository.acessarCardapioDia(diaAtualSemana);
+    }
+
+    public boolean usuarioTemPermissao(String token) {
+        String role = authService.getRoleFromToken(token);
+        // Lógica para verificar se o usuário tem a permissão necessária
+        return "ADMIN".equals(role);
     }
 }

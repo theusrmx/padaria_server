@@ -18,7 +18,10 @@ public class ProdutosController {
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/cadastrar-produto")
-    public ResponseEntity<Produtos> criarProduto(@RequestBody Produtos novoProduto) {
+    public ResponseEntity<Produtos> criarProduto(@RequestBody Produtos novoProduto, @RequestHeader("Authorization") String token) {
+        if (!produtosService.usuarioTemPermissao(token)) { //se o usuario logado nao tiver autorização, a página nao sera criada
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
         Produtos produtoCriado = produtosService.criarNovoProduto(novoProduto);
         return ResponseEntity.status(HttpStatus.CREATED).body(produtoCriado);
     }
@@ -36,30 +39,35 @@ public class ProdutosController {
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PutMapping("edit/{id}")
-    public ResponseEntity<Void> editarProduto(@PathVariable Long id, @RequestBody Produtos produtoAtualizado) {
-        Produtos produtoExistente = produtosService.obterProdutoPorId(id);
+    public ResponseEntity<Void> editarProduto(@PathVariable Long id, @RequestBody Produtos produtoAtualizado, @RequestHeader("Authorization") String token) {
+        if (!produtosService.usuarioTemPermissao(token)) { //se o usuario logado nao tiver autorização, a página nao sera criada
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }else {
+            Produtos produtoExistente = produtosService.obterProdutoPorId(id);
 
-        if (produtoExistente == null) {
-            return ResponseEntity.notFound().build();
+
+            if (produtoExistente == null) {
+                return ResponseEntity.notFound().build();
+            }
+
+            // Atualize os campos do produto existente com os valores do produto atualizado
+            produtoExistente.setNomeProduto(produtoAtualizado.getNomeProduto());
+            produtoExistente.setDescricao(produtoAtualizado.getDescricao());
+            produtoExistente.setPrecoMedio(produtoAtualizado.getPrecoMedio());
+            produtoExistente.setPrecoGrande(produtoAtualizado.getPrecoGrande());
+            produtoExistente.setSegundaDisponivel(produtoAtualizado.isSegundaDisponivel());
+            produtoExistente.setTercaDisponivel(produtoAtualizado.isTercaDisponivel());
+            produtoExistente.setQuartaDisponivel(produtoAtualizado.isQuartaDisponivel());
+            produtoExistente.setQuintaDisponivel(produtoAtualizado.isQuintaDisponivel());
+            produtoExistente.setSextaDisponivel(produtoAtualizado.isSextaDisponivel());
+            produtoExistente.setSabadoDisponivel(produtoAtualizado.isSabadoDisponivel());
+            produtoExistente.setDomingoDisponivel(produtoAtualizado.isDomingoDisponivel());
+
+            // Salve o produto atualizado no repositório
+            produtosService.criarNovoProduto(produtoExistente);
+
+            return ResponseEntity.ok().build();
         }
-
-        // Atualize os campos do produto existente com os valores do produto atualizado
-        produtoExistente.setNomeProduto(produtoAtualizado.getNomeProduto());
-        produtoExistente.setDescricao(produtoAtualizado.getDescricao());
-        produtoExistente.setPrecoMedio(produtoAtualizado.getPrecoMedio());
-        produtoExistente.setPrecoGrande(produtoAtualizado.getPrecoGrande());
-        produtoExistente.setSegundaDisponivel(produtoAtualizado.isSegundaDisponivel());
-        produtoExistente.setTercaDisponivel(produtoAtualizado.isTercaDisponivel());
-        produtoExistente.setQuartaDisponivel(produtoAtualizado.isQuartaDisponivel());
-        produtoExistente.setQuintaDisponivel(produtoAtualizado.isQuintaDisponivel());
-        produtoExistente.setSextaDisponivel(produtoAtualizado.isSextaDisponivel());
-        produtoExistente.setSabadoDisponivel(produtoAtualizado.isSabadoDisponivel());
-        produtoExistente.setDomingoDisponivel(produtoAtualizado.isDomingoDisponivel());
-
-        // Salve o produto atualizado no repositório
-        produtosService.criarNovoProduto(produtoExistente);
-
-        return ResponseEntity.ok().build();
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -70,14 +78,21 @@ public class ProdutosController {
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("/all")
-    public List<Produtos> getTodosProdutos(){
-        return produtosService.getTodosProdutos();
+    public ResponseEntity<List<Produtos>> getTodosProdutos(@RequestHeader("Authorization") String token) {
+        if (!produtosService.usuarioTemPermissao(token)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
+        List<Produtos> todosProdutos = produtosService.getTodosProdutos();
+        return ResponseEntity.ok(todosProdutos);
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @DeleteMapping("delete/{id}")
-    public ResponseEntity<Void> excluirProduto(@PathVariable Long id) {
-        if (produtosService.excluirProduto(id)) {
+    public ResponseEntity<Void> excluirProduto(@PathVariable Long id, @RequestHeader("Authorization") String token) {
+        if (!produtosService.usuarioTemPermissao(token)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }else if (produtosService.excluirProduto(id)) {
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.notFound().build();
