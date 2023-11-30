@@ -73,4 +73,15 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token inválido ou expirado");
         }
     }
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @GetMapping("/get-role")
+    public ResponseEntity<String> getSurnameFromToken(@RequestHeader("Authorization") String token) {
+        String role = authService.getRoleFromToken(token);
+        if (role != null) {
+            return ResponseEntity.ok(role);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token inválido ou expirado");
+        }
+    }
 }
